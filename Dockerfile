@@ -19,4 +19,4 @@ ENV WEB_DOCUMENT_ROOT=/app/public
 
 EXPOSE 8080
 
-CMD ["supervisord"]
+CMD php artisan serve --host 0.0.0.0 --port 10000
