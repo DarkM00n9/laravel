@@ -4,22 +4,21 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-// 🔥 AJOUT ICI
+// 🔥 Nos middlewares custom
 use App\Http\Middleware\SetTenantFromSubdomain;
 use App\Http\Middleware\CheckTenantBilling;
 
 class Kernel extends HttpKernel
 {
     /**
-     * The application's global HTTP middleware stack.
+     * Application global HTTP middleware stack.
      */
     protected $middleware = [
-        // Laravel par défaut
         \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
     ];
 
     /**
-     * The application's route middleware groups.
+     * Middleware groups
      */
     protected $middlewareGroups = [
         'web' => [
@@ -30,7 +29,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
-            // 🔥 AJOUT DU MULTI-TENANT
+            // 🔥 Ajout du multi-tenant
             SetTenantFromSubdomain::class,
         ],
 
@@ -40,14 +39,14 @@ class Kernel extends HttpKernel
     ];
 
     /**
-     * The application's route middleware.
+     * Route middleware
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        
-        // 🔥 AJOUT DU CHECK CONTRAT / BILLING
+
+        // 🔥 Ajout du check contrat/billing
         'tenant.billing' => CheckTenantBilling::class,
     ];
 }
